@@ -1,0 +1,35 @@
+{
+  "name": "file2html-odf",
+  "version": "0.1.0",
+  "description": "ODF engine for file2html",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "test": "./node_modules/.bin/jest --no-cache --config=./node_modules/file2html-dev-tools/jest/config.json",
+    "lint": "./node_modules/.bin/tslint \"src/**/*.ts\" \"test/unit/**/*.ts\"",
+    "build": "npm run lint && rm -rf lib && ./node_modules/.bin/tsc"
+  },
+  "dependencies": {
+    "file2html": "git@github.com:file2html/file2html.git",
+    "file2html-xml-tools": "git@github.com:file2html/file2html-xml-tools.git",
+    "file2html-archive-tools": "git@github.com:file2html/file2html-archive-tools.git"
+  },
+  "devDependencies": {
+    "file2html-dev-tools": "git@github.com:file2html/file2html-dev-tools.git"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/file2html/file2html-odf.git"
+  },
+  "keywords": [
+    "file2html",
+    "ODF",
+    ".odt"
+  ],
+  "author": "webschik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/file2html/file2html-odf/issues"
+  },
+  "homepage": "https://github.com/file2html/file2html-odf#readme"
+}
