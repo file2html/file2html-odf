@@ -3,8 +3,8 @@ import stringifyStylesheet from '../styles/stringify-stylesheet';
 import matchStyleTag from '../styles/match-style-tag';
 import createClassName from '../styles/create-class-name';
 
-export default function parseDocumentContent (fileContent: string): {styles: string; content: string;} {
-    const stylesheet: {[key: string]: string;} = {};
+export default function parseDocumentContent (fileContent: string): {styles: string; content: string} {
+    const stylesheet: {[key: string]: string} = {};
     let selector: string = '';
     let content: string = '';
 
