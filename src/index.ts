@@ -3,11 +3,16 @@ import * as mime from 'file2html/lib/mime';
 import {errorsNamespace} from 'file2html/lib/errors';
 import {readArchive, Archive, ArchiveEntry, ArchiveEntrySerialization} from 'file2html-archive-tools';
 import parseMeta from './parse-meta';
+import parsePictures from './parse-pictures';
 import parseStyles from './styles/parse-styles';
 import parseDocumentContent from './word/parse-document-content';
 
 const documentMimeType: string = mime.lookup('.odt');
 const supportedMimeTypes: string[] = [documentMimeType];
+
+export interface Relations {
+    [key: string]: string;
+}
 
 export default class ODFReader extends file2html.Reader {
     read ({fileInfo}: file2html.ReaderParams) {
@@ -53,17 +58,22 @@ export default class ODFReader extends file2html.Reader {
                 }));
             }
 
+
             fileEntry = archive.file('content.xml');
 
             if (!fileEntry) {
                 return Promise.reject(new Error(invalidFileError)) as any;
             }
 
-            queue.push(fileEntry.async(dataType).then((data: string) => {
-                return parseDocumentContent(data);
-            }).then((data: {styles: string; content: string}) => {
-                styles += `\n${ data.styles }`;
-                content = data.content;
+            queue.push(parsePictures(archive.folder('Pictures')).then((relations: Relations) => {
+                return fileEntry.async(dataType).then((data: string) => {
+                    return parseDocumentContent(data, {
+                        relations
+                    });
+                }).then((data: {styles: string; content: string}) => {
+                    styles += `\n${ data.styles }`;
+                    content = data.content;
+                });
             }));
 
             return Promise.all(queue).then(() => new file2html.File({
