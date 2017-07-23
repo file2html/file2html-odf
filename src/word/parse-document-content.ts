@@ -85,7 +85,7 @@ export default function parseDocumentContent (
                     break;
                 case 'draw:image':
                     const imageHref: string = attributes['xlink:href'];
-                    const src: string = href && relations[imageHref];
+                    const src: string = imageHref && relations[imageHref];
 
                     if (src) {
                         content += `<img id="${ imageHref.split('/').pop().split('.')[0] }" src="${ src }"/>`;
