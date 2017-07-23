@@ -72,7 +72,7 @@ export default function parseDocumentContent (
                     const className: string = attributes['text:style-name'];
 
                     if (className) {
-                        content += ` class="${ className }"`;
+                        content += ` class="${ tagName.split(':')[1] } ${ className }"`;
                     }
 
                     const href: string = attributes['xlink:href'];
@@ -88,7 +88,9 @@ export default function parseDocumentContent (
                     const src: string = imageHref && relations[imageHref];
 
                     if (src) {
-                        content += `<img id="${ imageHref.split('/').pop().split('.')[0] }" src="${ src }"/>`;
+                        const imageId: string = imageHref.split('/')[1].split('.')[0];
+
+                        content += `<img class="image" id="${ imageId }" src="${ src }"/>`;
                     }
                     break;
                 case 'text:bookmark':

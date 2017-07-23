@@ -6,7 +6,8 @@ import createClassName from './create-class-name';
 export default function parseStyles (fileContent: string): string {
     const stylesheet: {[key: string]: string} = {
         // reset default browser styles
-        '.tbl': 'border-collapse:collapse;'
+        '.table': 'border-collapse:collapse;',
+        '.image': 'max-width:100%;'
     };
     let selector: string = '';
 
@@ -19,10 +20,8 @@ export default function parseStyles (fileContent: string): string {
                             selector = 'p';
                             break;
                         case 'table':
-                            selector = 'table';
-                            break;
                         case 'table-row':
-                            selector = 'tr';
+                            selector = tagName;
                             break;
                         default:
                             //
