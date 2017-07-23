@@ -3,7 +3,7 @@ import * as mime from 'file2html/lib/mime';
 import {errorsNamespace} from 'file2html/lib/errors';
 import {readArchive, Archive, ArchiveEntry, ArchiveEntrySerialization} from 'file2html-archive-tools';
 import parseMeta from './parse-meta';
-import parsePictures from './parse-pictures';
+import {parsePictures, folderName} from './pictures';
 import parseStyles from './styles/parse-styles';
 import parseDocumentContent from './word/parse-document-content';
 
@@ -65,7 +65,7 @@ export default class ODFReader extends file2html.Reader {
                 return Promise.reject(new Error(invalidFileError)) as any;
             }
 
-            queue.push(parsePictures(archive.folder('Pictures')).then((relations: Relations) => {
+            queue.push(parsePictures(archive.folder(folderName)).then((relations: Relations) => {
                 return fileEntry.async(dataType).then((data: string) => {
                     return parseDocumentContent(data, {
                         relations

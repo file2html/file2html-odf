@@ -2,7 +2,9 @@ import {Archive, ArchiveEntry} from 'file2html-archive-tools';
 import {lookup} from 'file2html/lib/mime';
 import {Relations} from './index';
 
-export default function parsePictures (picturesFolder: Archive): Promise<Relations> {
+export const folderName: string = 'Pictures';
+
+export function parsePictures (picturesFolder: Archive): Promise<Relations> {
     const relations: Relations = {};
 
     if (!picturesFolder) {
@@ -13,7 +15,7 @@ export default function parsePictures (picturesFolder: Archive): Promise<Relatio
 
     picturesFolder.forEach((relativePath: string, fileEntry: ArchiveEntry) => {
         queue.push(fileEntry.async('base64').then((base64: string) => {
-            relations[relativePath] = `data:${ lookup(relativePath) };base64,${ base64 }`;
+            relations[`${ folderName }/${ relativePath }`] = `data:${ lookup(relativePath) };base64,${ base64 }`;
         }));
     });
 
