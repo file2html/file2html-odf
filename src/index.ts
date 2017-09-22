@@ -7,8 +7,11 @@ import {parsePictures, folderName} from './pictures';
 import parseStyles from './styles/parse-styles';
 import parseDocumentContent from './word/parse-document-content';
 
-const documentMimeType: string = mime.lookup('.odt');
-const supportedMimeTypes: string[] = [documentMimeType];
+const documentsMimeType: string[] = [
+    mime.lookup('.odt'),
+    mime.lookup('.sxw')
+];
+const supportedMimeTypes: string[] = documentsMimeType;
 
 export interface Relations {
     [key: string]: string;
@@ -33,7 +36,7 @@ export default class ODFReader extends file2html.Reader {
             let styles: string = '';
             let content: string = '<div></div>';
 
-            if (meta.mimeType === documentMimeType) {
+            if (documentsMimeType.indexOf(meta.mimeType) >= 0) {
                 meta.fileType = file2html.FileTypes.document;
             } else {
                 // TODO: support other ODF files
